@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: microservice-api-persona-deploy
+ labels: 
+  name: microservice-api-persona-deploy
+  app: microservice
+spec:
+ replicas: 2
+ selector: 
+  matchLabels:
+   app: microservice-api-persona
+   type: microservice
+ template:
+  metadata:
+   name: microservice-api-persona-pod
+   labels:
+    app: microservice-api-persona
+    type: microservice
+  spec:
+   containers:
+   - name: microservice-api-persona
+     image: cesarrojasa/trabajointernoapipersona:latest
+     ports:
+       - containerPort: 80
+     env: 
+       - name: ConnectionStrings__MySQLTrabajoInternoAppCon
+         value: Server=mysqldb-service;database=trabajointerno_mysql_db;user=root;password=0000
+       - name: Services__Imagenes
+         value: http://microservice-api-imagen-service

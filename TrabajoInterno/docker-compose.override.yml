@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  trabajointerno_api_persona:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - Services_Imagenes=http://trabajointerno_api_imagen
+    ports:
+      - "6104:80"
+
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  trabajointerno_api_imagen:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "6105:80"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  trabajointerno_api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "6106:80"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  trabajointerno_api_gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Services__Persona = http://trabajointerno_api_gateway
+    depends_on:
+      - trabajointerno_api_persona
+    ports:
+      - "6107:80"

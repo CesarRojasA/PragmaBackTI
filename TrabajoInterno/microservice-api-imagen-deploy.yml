@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: microservice-api-imagen-deploy
+ labels: 
+  name: microservice-api-imagen-deploy
+  app: microservice
+spec:
+ replicas: 2
+ selector: 
+  matchLabels:
+   app: microservice-api-imagen
+   type: microservice
+ template:
+  metadata:
+   name: microservice-api-imagen-pod
+   labels:
+    app: microservice-api-imagen
+    type: microservice
+  spec:
+   containers:
+   - name: microservice-api-imagen
+     image: cesarrojasa/trabajointernoapiimagen:latest
+     ports:
+      - containerPort: 80
+     env: 
+      - name: MongoDBTrabajoInternoSettings__Server
+        value: mongodb://mongodb-service:27017

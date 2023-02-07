@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: mongodb-deploy
+ labels: 
+  name: mongodb-deploy
+  app: microservice
+spec:
+ replicas: 1
+ selector: 
+  matchLabels:
+   app: microservice-api-imagen
+   name: mongodb-pod
+ template:
+  metadata:
+   name: mongodb-pod
+   labels:
+    app: microservice-api-imagen
+    name: mongodb-pod
+  spec:
+   containers:
+    - name: mongodb-service
+      image: mongo:latest
+      ports:
+       - containerPort: 27017

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: microservice-api-deploy
+ labels: 
+  name: microservice-api-deploy
+  app: microservice
+spec:
+ replicas: 2
+ selector: 
+  matchLabels:
+   app: microservice-api
+   type: microservice
+ template:
+  metadata:
+   name: microservice-api-pod
+   labels:
+    app: microservice-api
+    type: microservice
+  spec:
+   containers:
+   - name: microservice-api
+     image: cesarrojasa/trabajointernoapi:latest
+     ports:
+     - containerPort: 80
